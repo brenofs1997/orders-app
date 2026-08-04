@@ -17,8 +17,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('@app:user');
-    const token = localStorage.getItem('@app:token');
+    const savedUser = localStorage.getItem('@app:userDto');
+    const token = localStorage.getItem('@app:accessToken');
     
     if (savedUser && token) {
       setUser(JSON.parse(savedUser));
@@ -26,19 +26,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, pass: string) => {
-    const response = await api.post<AuthResponse>('/auth/login', { email, senha: pass });
-    const { token, user: userData } = response.data;
+  const login = async (email: string, password: string) => {
+    const response = await api.post<AuthResponse>('/auth/login', { email, password });
+    const { accessToken, userDto } = response.data;
 
-    localStorage.setItem('@app:token', token);
-    localStorage.setItem('@app:user', JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem('@app:accessToken', accessToken);
+    localStorage.setItem('@app:userDto', JSON.stringify(userDto));
+    setUser(userDto);
   };
 
-  const register = async (nome: string, email: string, pass: string) => {
-    await api.post('/auth/register', { nome, email, senha: pass });
+  const register = async (nome: string, email: string, password: string) => {
+    await api.post('/auth/register', { nome, email, password });
     
-    await login(email, pass);
+    await login(email, password);
   };
 
   const logout = () => {
