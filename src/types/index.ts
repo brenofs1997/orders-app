@@ -2,28 +2,33 @@ export type OrderStatus = 'RECEBIDO' | 'EM_PREPARO' | 'SAIU_PARA_ENTREGA' | 'ENT
 
 export interface OrderItem {
   id?: number;
-  produto: string;
-  quantidade: number;
-  precoUnitario: number;
+  name: string;
+  quantity: number;
+  unitPrice: number;
 }
 
 export interface Order {
   id: number;
-  cliente: string;
-  enderecoEntrega: string;
-  itens: OrderItem[];
+  customerName: string;
+  deliveryAddress: string;
+  items: OrderItem[];
   status: OrderStatus;
   criadoEm?: string;
 }
 
 export interface User {
-  nome: string;
+  name: string;
   email: string;
 }
 
 export interface AuthResponse {
-  refreshToken?: string;
+  refreshToken: string;
   expiresIn?: number;
   accessToken: string;
   userDto: User;
+}
+
+export interface RefreshTokenResponse {
+  token: string;
+  refreshToken: string;
 }

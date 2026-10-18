@@ -47,6 +47,7 @@ function MainApp() {
   );
 }
 
+
 export default function App() {
   return (
     <AuthProvider>

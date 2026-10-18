@@ -44,9 +44,9 @@ export function OrderList({ orders, onOrderUpdated }: OrderListProps) {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                 <div>
-                  <strong>Pedido #{order.id}</strong> — Cliente: <strong>{order.cliente}</strong>
+                  <strong>Pedido #{order.id}</strong> — Cliente: <strong>{order.customerName}</strong>
                   <br />
-                  <small style={{ color: '#555' }}>Entrega em: {order.enderecoEntrega}</small>
+                  <small style={{ color: '#555' }}>Entrega em: {order.deliveryAddress}</small>
                 </div>
 
                 <div>
@@ -65,11 +65,11 @@ export function OrderList({ orders, onOrderUpdated }: OrderListProps) {
               </div>
 
               <div>
-                <small><strong>Itens:</strong></small>
+                <small><strong>Items:</strong></small>
                 <ul style={{ margin: '4px 0', paddingLeft: '20px' }}>
-                  {order.itens?.map((item, idx) => (
+                  {order.items?.map((item, idx) => (
                     <li key={idx}>
-                      <small>{item.quantidade}x {item.produto} - R$ {item.precoUnitario}</small>
+                      <small>{item.quantity}x {item.name} - R$ {item.unitPrice}</small>
                     </li>
                   ))}
                 </ul>

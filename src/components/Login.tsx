@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 export function Login() {
   const [isRegistering, setIsRegistering] = useState(false);
-  const [nome, setNome] = useState('');
+  const [name, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -17,7 +17,7 @@ export function Login() {
 
     try {
       if (isRegistering) {
-        await register(nome, email, password);
+        await register(name, email, password);
       } else {
         await login(email, password);
       }
@@ -36,7 +36,7 @@ export function Login() {
           <input
             type="text"
             placeholder="Nome Completo"
-            value={nome}
+            value={name}
             onChange={(e) => setNome(e.target.value)}
             required
             style={{ width: '100%', marginBottom: '10px', padding: '8px' }}

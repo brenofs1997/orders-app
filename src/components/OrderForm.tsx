@@ -7,30 +7,30 @@ interface OrderFormProps {
 }
 
 export function OrderForm({ onOrderCreated }: OrderFormProps) {
-  const [cliente, setCliente] = useState('');
-  const [enderecoEntrega, setEnderecoEntrega] = useState('');
-  const [produto, setProduto] = useState('');
-  const [quantidade, setQuantidade] = useState(1);
-  const [precoUnitario, setPrecoUnitario] = useState(0);
+  const [customerName, setCustomerName] = useState('');
+  const [deliveryAddress, setDeliveryAddress] = useState('');
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [unitPrice, setUnitPrice] = useState(0);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const payload = {
-      cliente,
-      enderecoEntrega,
-      itens: [{ produto, quantidade: Number(quantidade), precoUnitario: Number(precoUnitario) }],
+      customerName,
+      deliveryAddress,
+      items: [{ name, quantity: Number(quantity), unitPrice: Number(unitPrice) }],
     };
 
     try {
       const response = await api.post<Order>('/orders', payload);
       onOrderCreated(response.data);
 
-      setCliente('');
-      setEnderecoEntrega('');
-      setProduto('');
-      setQuantidade(1);
-      setPrecoUnitario(0);
+      setCustomerName('');
+      setDeliveryAddress('');
+      setName('');
+      setQuantity(0);
+      setUnitPrice(0);
     } catch (err) {
       alert('Erro ao criar pedido. Verifique a conexão com o backend.');
     }
@@ -44,16 +44,16 @@ export function OrderForm({ onOrderCreated }: OrderFormProps) {
         <input
           type="text"
           placeholder="Nome do Cliente"
-          value={cliente}
-          onChange={(e) => setCliente(e.target.value)}
+          value={customerName}
+          onChange={(e) => setCustomerName(e.target.value)}
           required
           style={{ marginRight: '10px', padding: '5px' }}
         />
         <input
           type="text"
           placeholder="Endereço de Entrega"
-          value={enderecoEntrega}
-          onChange={(e) => setEnderecoEntrega(e.target.value)}
+          value={deliveryAddress}
+          onChange={(e) => setDeliveryAddress(e.target.value)}
           required
           style={{ padding: '5px', width: '250px' }}
         />
@@ -64,16 +64,16 @@ export function OrderForm({ onOrderCreated }: OrderFormProps) {
         <input
           type="text"
           placeholder="Produto"
-          value={produto}
-          onChange={(e) => setProduto(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
           style={{ marginRight: '5px', padding: '5px' }}
         />
         <input
           type="number"
           placeholder="Qtd"
-          value={quantidade}
-          onChange={(e) => setQuantidade(Number(e.target.value))}
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
           required
           style={{ width: '60px', marginRight: '5px', padding: '5px' }}
         />
@@ -81,8 +81,8 @@ export function OrderForm({ onOrderCreated }: OrderFormProps) {
           type="number"
           step="0.01"
           placeholder="Preço (R$)"
-          value={precoUnitario}
-          onChange={(e) => setPrecoUnitario(Number(e.target.value))}
+          value={unitPrice}
+          onChange={(e) => setUnitPrice(Number(e.target.value))}
           required
           style={{ width: '90px', marginRight: '5px', padding: '5px' }}
         />

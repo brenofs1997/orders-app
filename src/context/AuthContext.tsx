@@ -5,7 +5,7 @@ import { api } from '../services/api';
 interface AuthContextType {
   user: User | null;
   login: (email: string, pass: string) => Promise<void>;
-  register: (nome: string, email: string, pass: string) => Promise<void>;
+  register: (name: string, email: string, pass: string) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
@@ -27,23 +27,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await api.post<AuthResponse>('/auth/login', { email, password });
-    const { accessToken, userDto } = response.data;
+    const response = await api.post<AuthResponse>('/auth/login', { email, password }); //{data:{accessToken: 'mocked-token', userDto: { email:'email@example.com', name: 'Mocked User'}}};//
+    const { accessToken, userDto, refreshToken } = response.data;
 
     localStorage.setItem('@app:accessToken', accessToken);
     localStorage.setItem('@app:userDto', JSON.stringify(userDto));
+    localStorage.setItem('@app:refreshToken', refreshToken);
     setUser(userDto);
   };
 
-  const register = async (nome: string, email: string, password: string) => {
-    await api.post('/auth/register', { nome, email, password });
+  const register = async (name: string, email: string, password: string) => {
+    await api.post('/auth/register', { name, email, password });
     
     await login(email, password);
   };
 
   const logout = () => {
-    localStorage.removeItem('@app:token');
-    localStorage.removeItem('@app:user');
+    localStorage.removeItem('@app:accessToken');
+    localStorage.removeItem('@app:userDto');
+    localStorage.removeItem('@app:refreshToken');
     setUser(null);
   };
 
